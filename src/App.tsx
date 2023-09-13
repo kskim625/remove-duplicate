@@ -22,13 +22,14 @@ function App() {
     newList.forEach((text) => {
       const targetList = text.split(" ");
       targetList.forEach((text2, i) => {
-        const maxLength = Math.max(...newList.map((v) => v.length));
-        for (let len = maxLength; len > 1; len--) {
-          const targetWord = text2.substring(0, len);
-          targetList.forEach((compareText, j) => {
-            if (i === j) return;
-            targetList[j] = compareText.replaceAll(targetWord, "");
-          });
+        for (let len = 2; len < text2.length; len++) {
+          for (let startIdx = 0; startIdx < text2.length; startIdx++) {
+            const targetWord = text2.substring(startIdx, startIdx + len);
+            targetList.forEach((compareText, j) => {
+              if (i === j) return;
+              targetList[j] = compareText.replaceAll(targetWord, "");
+            });
+          }
         }
       });
       resultList.push(_.pullAll(targetList, [""]).join(" "));
